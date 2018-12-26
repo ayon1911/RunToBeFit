@@ -13,6 +13,7 @@
 		B67F8A5721D251C100321AA3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B67F8A5521D251C100321AA3 /* Main.storyboard */; };
 		B67F8A5921D251C200321AA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B67F8A5821D251C200321AA3 /* Assets.xcassets */; };
 		B67F8A5C21D251C200321AA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B67F8A5A21D251C200321AA3 /* LaunchScreen.storyboard */; };
+		B6872E0721D384F000CE075E /* WorkoutDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6872E0621D384F000CE075E /* WorkoutDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		B67F8A5821D251C200321AA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B67F8A5B21D251C200321AA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B67F8A5D21D251C200321AA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6872E0621D384F000CE075E /* WorkoutDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				B67F8A5821D251C200321AA3 /* Assets.xcassets */,
 				B67F8A5A21D251C200321AA3 /* LaunchScreen.storyboard */,
 				B67F8A5D21D251C200321AA3 /* Info.plist */,
+				B6872E0621D384F000CE075E /* WorkoutDataManager.swift */,
 			);
 			path = RunToBeFit;
 			sourceTree = "<group>";
@@ -99,6 +102,11 @@
 				TargetAttributes = {
 					B67F8A4B21D251C100321AA3 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -141,6 +149,7 @@
 				B67F8A5421D251C100321AA3 /* WorkoutMapVC.swift in Sources */,
 				B67F8A5021D251C100321AA3 /* AppDelegate.swift in Sources */,
 				B67F8A5221D251C100321AA3 /* CreateWorkoutVC.swift in Sources */,
+				B6872E0721D384F000CE075E /* WorkoutDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

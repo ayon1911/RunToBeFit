@@ -128,6 +128,9 @@
                         <viewLayoutGuide key="safeArea" id="O1u-W8-tvY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Last Run" id="7dg-k8-4aQ"/>
+                    <connections>
+                        <outlet property="mapView" destination="dOh-mh-DJd" id="Juc-Xv-QNK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
