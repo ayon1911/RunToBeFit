@@ -14,6 +14,8 @@
 		B67F8A5921D251C200321AA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B67F8A5821D251C200321AA3 /* Assets.xcassets */; };
 		B67F8A5C21D251C200321AA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B67F8A5A21D251C200321AA3 /* LaunchScreen.storyboard */; };
 		B6872E0721D384F000CE075E /* WorkoutDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6872E0621D384F000CE075E /* WorkoutDataManager.swift */; };
+		B6872E0921D3C09F00CE075E /* WorkoutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6872E0821D3C09F00CE075E /* WorkoutType.swift */; };
+		B6872E0B21D3FB7E00CE075E /* AltitudeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6872E0A21D3FB7E00CE075E /* AltitudeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		B67F8A5B21D251C200321AA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B67F8A5D21D251C200321AA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6872E0621D384F000CE075E /* WorkoutDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDataManager.swift; sourceTree = "<group>"; };
+		B6872E0821D3C09F00CE075E /* WorkoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutType.swift; sourceTree = "<group>"; };
+		B6872E0A21D3FB7E00CE075E /* AltitudeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltitudeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,8 @@
 				B67F8A5A21D251C200321AA3 /* LaunchScreen.storyboard */,
 				B67F8A5D21D251C200321AA3 /* Info.plist */,
 				B6872E0621D384F000CE075E /* WorkoutDataManager.swift */,
+				B6872E0821D3C09F00CE075E /* WorkoutType.swift */,
+				B6872E0A21D3FB7E00CE075E /* AltitudeViewModel.swift */,
 			);
 			path = RunToBeFit;
 			sourceTree = "<group>";
@@ -149,6 +155,8 @@
 				B67F8A5421D251C100321AA3 /* WorkoutMapVC.swift in Sources */,
 				B67F8A5021D251C100321AA3 /* AppDelegate.swift in Sources */,
 				B67F8A5221D251C100321AA3 /* CreateWorkoutVC.swift in Sources */,
+				B6872E0921D3C09F00CE075E /* WorkoutType.swift in Sources */,
+				B6872E0B21D3FB7E00CE075E /* AltitudeViewModel.swift in Sources */,
 				B6872E0721D384F000CE075E /* WorkoutDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

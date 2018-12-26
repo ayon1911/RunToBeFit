@@ -26,6 +26,8 @@
 	<string>The app would like to use your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The app would like to use your location</string>
+	<key>NSMotionUsageDescription</key>
+	<string>The app would require motion permission!</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
