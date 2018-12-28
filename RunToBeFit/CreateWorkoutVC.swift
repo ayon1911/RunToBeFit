@@ -32,24 +32,17 @@ class CreateWorkoutVC: UIViewController {
     var workoutDuration: TimeInterval = 0.0
     var workoutTimer: Timer?
     var workoutDistance: Double = 0.0
-    
     var workoutStartTime: Date?
-    var pedometer: CMPedometer?
-    var averagePace: Double = 0.0
-    var workoutSteps: Double = 0
-    var floorsAscended: Double = 0
-    
-    var motionManager: CMMotionActivityManager?
-    var currentWorkoutType = WorkoutType.unknown
-    
+
     let locationManager = CLLocationManager()
     var lastSavedLocation: CLLocation?
     
     var isMotionAvailable: Bool = false
     
     let altMeterViewModel = AltitudeViewModel()
-//    var workoutAltitude: Double = 0.0
-//    var altimeter: CMAltimeter?
+    let pedometerViewModel = PedometerViewModel()
+    let motionViewModel = MotionViewModel()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,10 +58,13 @@ class CreateWorkoutVC: UIViewController {
         case .active:
             currentState = .inactive
             stopWorkoutTimer()
-            pedometer?.stopUpdates()
-            motionManager?.stopActivityUpdates()
+            pedometerViewModel.pedometer?.stopUpdates()
+            motionViewModel.startActivityUpdates()
             altMeterViewModel.altimeter?.stopRelativeAltitudeUpdates()
-            WorkoutDataManager.shared.saveWorkout(duration: workoutDistance)
+            if let workoutStartTime = workoutStartTime {
+                let workout = Workout(startTime: workoutStartTime, endtime: Date(), duration: workoutDuration, locations: [], workoutTypes: motionViewModel.currentWorkoutType, totalSteps: pedometerViewModel.workoutSteps, flightsClimbed: pedometerViewModel.floorsAscended, distance: pedometerViewModel.workoutDistance)
+                WorkoutDataManager.shared.saveWorkout(workout)
+            }
         default:
             print("toggle workout called out of context")
         }
@@ -128,7 +124,7 @@ class CreateWorkoutVC: UIViewController {
             presentPermissionErrorAlert()
         }
     }
-    fileprivate func startWorkout() {
+    func startWorkout() {
         print("Start workout")
         currentState = .active
         UserDefaults.standard.set(true, forKey: "isConfigured")
@@ -142,60 +138,35 @@ class CreateWorkoutVC: UIViewController {
         if (CMMotionManager().isDeviceMotionAvailable && CMPedometer.isStepCountingAvailable() && CMAltimeter.isRelativeAltitudeAvailable()) {
             //start motion updates
             isMotionAvailable = true
-            startPedometerUpdates()
-            startActivityUpdates()
+            pedometerViewModel.startPedometerUpdates(with: lastSavedTime)
+            motionViewModel.startActivityUpdates()
             altMeterViewModel.startAltmeterUpdates()
         } else {
             print("Motion activity not available on the device")
             isMotionAvailable = false
         }
     }
-    fileprivate func requestAlwaysPermission() {
+    func requestAlwaysPermission() {
         if let isConfigured = UserDefaults.standard.value(forKey: "isConfigured") as? Bool, isConfigured == true {
             startWorkout()
         } else {
             locationManager.requestAlwaysAuthorization()
         }
     }
-    fileprivate func presentPermissionErrorAlert() {
-        let alert = UIAlertController(title: "Permission Error", message: "Please enable location service on your device", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            if let settingsUrl = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsUrl) {
-                UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
-            }
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(cancelAction)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    fileprivate func stringFromTime(timeInterval: TimeInterval) -> String {
-        let integerDuration = Int(timeInterval)
-        let seconds = integerDuration % 60
-        let minutes = (integerDuration / 60) % 60
-        let hours = (integerDuration / 3600)
-        if hours > 0 {
-            return String("\(hours) hrs \(minutes) mins \(seconds) seconds")
-        } else {
-            print("Seconds : \(seconds)")
-            return String("\(minutes) mins \(seconds) seconds")
-        }
-    }
-    
+
     @objc fileprivate func handleUpdateWorkoutData() {
         let now = Date()
-        var workoutPaceText = String(format: "%.2f m/s |  %0.2fm ", arguments: [averagePace, altMeterViewModel.workoutAltitude])
+        var workoutPaceText = String(format: "%.2f m/s |  %0.2fm ", arguments: [pedometerViewModel.averagePace, altMeterViewModel.workoutAltitude])
         
         if let lastTime = lastSavedTime {
             self.workoutDuration += now.timeIntervalSince(lastTime)
         }
-        if currentWorkoutType != WorkoutType.unknown {
-            workoutPaceText.append(" | \(currentWorkoutType)")
+        if motionViewModel.currentWorkoutType != WorkoutType.unknown {
+            workoutPaceText.append(" | \(motionViewModel.currentWorkoutType)")
         }
         workoutTimeLbl?.text = stringFromTime(timeInterval: workoutDuration)
         workoutPaceLbl?.text = workoutPaceText
-        workoutDistanceLbl?.text = String(format: "%.2fm | %d steps | %d floors", arguments: [workoutDistance, workoutSteps, floorsAscended])
+        workoutDistanceLbl?.text = String(format: "%.2fm | %d steps | %d floors", arguments: [pedometerViewModel.workoutDistance, pedometerViewModel.workoutSteps, pedometerViewModel.floorsAscended])
         
         lastSavedTime = now
     }
@@ -204,105 +175,14 @@ class CreateWorkoutVC: UIViewController {
         workoutTimer?.invalidate()
     }
     
-    fileprivate func startPedometerUpdates() {
-        guard let lastSavedTime = lastSavedTime else { return }
-        pedometer = CMPedometer()
-        pedometer?.startUpdates(from: lastSavedTime, withHandler: { [weak self] (pedometerData, error) in
-            //update pedometer data
-            if let err = error {
-                print("Could not measure pedometer data", err)
-            }
-            self?.getPedometerData(from: pedometerData)
-        })
-    }
-    
-    fileprivate func getPedometerData(from pedometerData: CMPedometerData?) {
-        guard let pedometerData = pedometerData,
-            let distance = pedometerData.distance as? Double,
-            let pace = pedometerData.averageActivePace as? Double,
-            let steps = pedometerData.numberOfSteps as? Int,
-            let floor = pedometerData.floorsAscended as? Int else { return }
-        workoutDistance = distance
-        workoutSteps = Double(steps)
-        floorsAscended = Double(floor)
-        averagePace = pace
-    }
-    
-    fileprivate func resetWorkoutData() {
+    func resetWorkoutData() {
         lastSavedTime = Date()
         workoutDuration = 0.0
         workoutDistance = 0.0
-        workoutSteps = 0
-        floorsAscended = 0
-        averagePace = 0.0
+        pedometerViewModel.resetPedometerData()
         altMeterViewModel.workoutAltitude = 0.0
-        currentWorkoutType = WorkoutType.unknown
+        motionViewModel.currentWorkoutType = WorkoutType.unknown
     }
-    
-    fileprivate func startActivityUpdates() {
-        motionManager = CMMotionActivityManager()
-        motionManager?.startActivityUpdates(to: OperationQueue.main, withHandler: { [weak self] (activity: CMMotionActivity?) in
-            //received motion update
-            guard let activity = activity else { return }
-            if activity.walking {
-                self?.currentWorkoutType = WorkoutType.walking
-            } else if activity.running {
-                self?.currentWorkoutType = WorkoutType.running
-            } else if activity.cycling {
-                self?.currentWorkoutType = WorkoutType.bicycling
-            } else if activity.stationary {
-                self?.currentWorkoutType = WorkoutType.stationary
-            } else {
-                self?.currentWorkoutType = WorkoutType.unknown
-            }
-        })
-    }
-    
-//    fileprivate func startAltmeterUpdates() {
-//        altimeter = CMAltimeter()
-//        altimeter?.startRelativeAltitudeUpdates(to: OperationQueue.main, withHandler: { [weak self] (altmeterData: CMAltitudeData?, error: Error?) in
-//            if let err = error {
-//                print("An error occured while fetching Altitude Data", err)
-//                return
-//            }
-//            guard let altitudeData = altmeterData else { return }
-//            guard let relativeAltitude = altitudeData.relativeAltitude as? Double else { return }
-//            self?.workoutAltitude = relativeAltitude
-//        })
-//    }
 }
 
-extension CreateWorkoutVC: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-        case .authorizedWhenInUse:
-            requestAlwaysPermission()
-        case .authorizedAlways:
-            resetWorkoutData()
-            startWorkout()
-        case .denied:
-            presentPermissionErrorAlert()
-        default:
-            NSLog("Unhandled Location Manager Status: \(status)")
-        }
-        print("Received permission change update!")
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let mostRecentLocation = locations.last else {
-            print("unable to read most recent location")
-            return
-        }
-        lastSavedLocation = mostRecentLocation
-        print("Most recent location : \(mostRecentLocation)")
-        WorkoutDataManager.shared.addLocation(coordinate: mostRecentLocation.coordinate)
-    }
-    
-    func locationManagerDidPauseLocationUpdates(_ manager: CLLocationManager) {
-        NSLog("Location tracking paused")
-    }
-    
-    func locationManagerDidResumeLocationUpdates(_ manager: CLLocationManager) {
-        NSLog("Location tracking resumed")
-    }
-}
+

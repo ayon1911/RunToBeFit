@@ -16,6 +16,12 @@
 		B6872E0721D384F000CE075E /* WorkoutDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6872E0621D384F000CE075E /* WorkoutDataManager.swift */; };
 		B6872E0921D3C09F00CE075E /* WorkoutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6872E0821D3C09F00CE075E /* WorkoutType.swift */; };
 		B6872E0B21D3FB7E00CE075E /* AltitudeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6872E0A21D3FB7E00CE075E /* AltitudeViewModel.swift */; };
+		B6872E0D21D3FDDA00CE075E /* CreateWorkoutVC+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6872E0C21D3FDDA00CE075E /* CreateWorkoutVC+ext.swift */; };
+		B6872E0F21D3FEB100CE075E /* PedometerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6872E0E21D3FEB100CE075E /* PedometerViewModel.swift */; };
+		B6872E1121D4028200CE075E /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6872E1021D4028200CE075E /* Bindable.swift */; };
+		B6872E1321D4077000CE075E /* MotionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6872E1221D4077000CE075E /* MotionViewModel.swift */; };
+		B6872E1A21D6268E00CE075E /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6872E1921D6268E00CE075E /* HealthKit.framework */; };
+		B6872E1D21D627AF00CE075E /* HealthStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6872E1C21D627AF00CE075E /* HealthStoreManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +36,13 @@
 		B6872E0621D384F000CE075E /* WorkoutDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDataManager.swift; sourceTree = "<group>"; };
 		B6872E0821D3C09F00CE075E /* WorkoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutType.swift; sourceTree = "<group>"; };
 		B6872E0A21D3FB7E00CE075E /* AltitudeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltitudeViewModel.swift; sourceTree = "<group>"; };
+		B6872E0C21D3FDDA00CE075E /* CreateWorkoutVC+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateWorkoutVC+ext.swift"; sourceTree = "<group>"; };
+		B6872E0E21D3FEB100CE075E /* PedometerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedometerViewModel.swift; sourceTree = "<group>"; };
+		B6872E1021D4028200CE075E /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
+		B6872E1221D4077000CE075E /* MotionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionViewModel.swift; sourceTree = "<group>"; };
+		B6872E1921D6268E00CE075E /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		B6872E1B21D6268E00CE075E /* RunToBeFit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunToBeFit.entitlements; sourceTree = "<group>"; };
+		B6872E1C21D627AF00CE075E /* HealthStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStoreManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6872E1A21D6268E00CE075E /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,6 +62,7 @@
 			children = (
 				B67F8A4E21D251C100321AA3 /* RunToBeFit */,
 				B67F8A4D21D251C100321AA3 /* Products */,
+				B6872E1821D6268E00CE075E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +77,7 @@
 		B67F8A4E21D251C100321AA3 /* RunToBeFit */ = {
 			isa = PBXGroup;
 			children = (
+				B6872E1B21D6268E00CE075E /* RunToBeFit.entitlements */,
 				B67F8A4F21D251C100321AA3 /* AppDelegate.swift */,
 				B67F8A5121D251C100321AA3 /* CreateWorkoutVC.swift */,
 				B67F8A5321D251C100321AA3 /* WorkoutMapVC.swift */,
@@ -72,8 +88,21 @@
 				B6872E0621D384F000CE075E /* WorkoutDataManager.swift */,
 				B6872E0821D3C09F00CE075E /* WorkoutType.swift */,
 				B6872E0A21D3FB7E00CE075E /* AltitudeViewModel.swift */,
+				B6872E0C21D3FDDA00CE075E /* CreateWorkoutVC+ext.swift */,
+				B6872E0E21D3FEB100CE075E /* PedometerViewModel.swift */,
+				B6872E1021D4028200CE075E /* Bindable.swift */,
+				B6872E1221D4077000CE075E /* MotionViewModel.swift */,
+				B6872E1C21D627AF00CE075E /* HealthStoreManager.swift */,
 			);
 			path = RunToBeFit;
+			sourceTree = "<group>";
+		};
+		B6872E1821D6268E00CE075E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B6872E1921D6268E00CE075E /* HealthKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -110,6 +139,9 @@
 						CreatedOnToolsVersion = 10.1;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.HealthKit = {
 								enabled = 1;
 							};
 						};
@@ -152,12 +184,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6872E0F21D3FEB100CE075E /* PedometerViewModel.swift in Sources */,
+				B6872E1D21D627AF00CE075E /* HealthStoreManager.swift in Sources */,
 				B67F8A5421D251C100321AA3 /* WorkoutMapVC.swift in Sources */,
 				B67F8A5021D251C100321AA3 /* AppDelegate.swift in Sources */,
 				B67F8A5221D251C100321AA3 /* CreateWorkoutVC.swift in Sources */,
 				B6872E0921D3C09F00CE075E /* WorkoutType.swift in Sources */,
 				B6872E0B21D3FB7E00CE075E /* AltitudeViewModel.swift in Sources */,
+				B6872E1321D4077000CE075E /* MotionViewModel.swift in Sources */,
+				B6872E0D21D3FDDA00CE075E /* CreateWorkoutVC+ext.swift in Sources */,
 				B6872E0721D384F000CE075E /* WorkoutDataManager.swift in Sources */,
+				B6872E1121D4028200CE075E /* Bindable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +340,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RunToBeFit/RunToBeFit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UHJSHJ73VS;
 				INFOPLIST_FILE = RunToBeFit/Info.plist;
@@ -321,6 +359,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RunToBeFit/RunToBeFit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UHJSHJ73VS;
 				INFOPLIST_FILE = RunToBeFit/Info.plist;

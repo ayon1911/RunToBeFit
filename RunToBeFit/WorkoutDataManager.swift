@@ -8,15 +8,21 @@
 
 import Foundation
 import CoreLocation
+import HealthKit
 
 struct Coordinate: Codable {
     var latitude: Double
     var logitude: Double
 }
 struct Workout: Codable {
+    var startTime: Date
     var endtime: Date
     var duration: TimeInterval
     var locations: [Coordinate]
+    var workoutTypes: String
+    var totalSteps: Double
+    var flightsClimbed: Double
+    var distance: Double
 }
 
 typealias Workouts = [Workout]
@@ -25,10 +31,12 @@ class WorkoutDataManager {
     static let shared = WorkoutDataManager()
     private var workouts: Workouts?
     private var activeLocations: [CLLocationCoordinate2D]?
+    private var healthStore: HealthStoreManager?
     
     private init() {
         loadFromPlist()
         print("Singleton Initialized")
+        healthStore = HealthStoreManager()
     }
     
     private var workoutFileUrl: URL? {
@@ -74,14 +82,17 @@ class WorkoutDataManager {
         }
     }
     //save workout for a duration
-    func saveWorkout(duration: TimeInterval) {
+    func saveWorkout(_ workout: Workout) {
         guard let activelocations = activeLocations else { return }
+        var activeWorkout = workout
         let mappedCoordinates = activelocations.map { (value: CLLocationCoordinate2D) in
             return Coordinate(latitude: value.latitude, logitude: value.longitude)
         }
-        let currentWorkout = Workout(endtime: Date(), duration: duration, locations: mappedCoordinates)
-        workouts?.append(currentWorkout)
+//        let currentWorkout = Workout(endtime: Date(), duration: Operation, locations: mappedCoordinates)
+        activeWorkout.locations = mappedCoordinates
+        workouts?.append(activeWorkout)
         saveToPlist()
+        HealthStoreManager.shared.saveWorkoutToHealthKit(activeWorkout)
     }
     //get the last saved workout
     func getLastWorkout() -> [CLLocationCoordinate2D]? {
